@@ -7,3 +7,5 @@ wget https://raw.githubusercontent.com/yoonkim/lstm-char-cnn/master/data/ptb/tes
 wget https://raw.githubusercontent.com/yoonkim/lstm-char-cnn/master/data/ptb/train.txt
 wget https://raw.githubusercontent.com/yoonkim/lstm-char-cnn/master/data/ptb/valid.txt
 cd ../..
+
+th dataset/process.lua

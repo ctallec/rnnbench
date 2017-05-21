@@ -6,7 +6,7 @@ function Processer:_init(opts)
     self.batch_size = opts.batch_size
 end
 
-function Processer:createVocabulary()
+function Processer:createVocabulary(vocab_file)
     local file = torch.DiskFile(self.base_file, 'r')
     local raw = file:readString("*a")
     file:close()
@@ -25,6 +25,7 @@ function Processer:createVocabulary()
     for k, v in pairs(self.vocab) do
         self.inverse_vocab[v] = k
     end
+    torch.save(vocab_file, self.inverse_vocab)
 end
 
 function Processer:processFile(file, save_file)

@@ -33,6 +33,10 @@ local rnncore = RNNCore{rnnType='lstm', hiddenSize=opt.hiddenSize, vocabSize=voc
 local rnn = rnncore:buildCore()
 
 if opt.gpu > 0 then
+    require 'cunn'
+    require 'cutorch'
+    require 'cudnn'
+
     rnn = rnn:cuda()
 end
 

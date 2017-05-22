@@ -9,6 +9,7 @@ cmd:option('-gpu', 0, 'number of gpu')
 cmd:option('-t0', 100, 'sequence length')
 cmd:option('-learningRate', 1e-4, 'learning rate')
 cmd:option('-epochs', 20, 'number of epochs')
+cmd:option('-noclamp', false, 'clamping gradient')
 local opt = cmd:parse(arg)
 
 local data_dir = 'dataset/ptb'
@@ -73,7 +74,9 @@ local function train()
         gradParams:zero()
 
         local loss = fitter:fit(x, y)
-        gradParams:clamp(-1, 1)
+        if not opt.noclamp then
+            gradParams:clamp(-1, 1)
+        end
         return loss, gradParams
     end
 

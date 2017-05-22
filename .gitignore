@@ -2,3 +2,5 @@ dataset/ptb/*
 !dataset/ptb/.gitkeep
 models/*
 !models/fetch.sh
+save/*
+!save/.gitkeep

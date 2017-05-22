@@ -51,7 +51,7 @@ local fitter = Fitter{state_size=state_shape, core=rnn, criterion=criterion, t0=
 local valid_state = torch.Tensor(batch_size, state_size):zero()
 
 local optimState = {
-    learningRate=1e-3
+    learningRate=1e-4
 }
 
 if opt.gpu > 0 then

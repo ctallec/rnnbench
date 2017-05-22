@@ -107,10 +107,15 @@ local function eval()
     return cumLoss / math.floor(valid_size/opt.t0)
 end
 
+local minEval = 10000
 for e=1, opt.epochs do
     print("Training: ")
     train()
     print("Validation: ")
-    print(eval())
-    torch.save(save_model_file, rnn)
+    local evaluation = eval()
+    print(evaluation)
+    if evaluation < minEval then
+        minEval = evaluation
+        torch.save(save_model_file, rnn)
+    end
 end

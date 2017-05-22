@@ -7,6 +7,7 @@ local cmd = torch.CmdLine()
 cmd:option('-hiddenSize', 1000, 'hidden size')
 cmd:option('-gpu', 0, 'number of gpu')
 cmd:option('-t0', 100, 'sequence length')
+cmd:option('-learningRate', 1e-4, 'learning rate')
 cmd:option('-epochs', 20, 'number of epochs')
 local opt = cmd:parse(arg)
 
@@ -51,7 +52,7 @@ local fitter = Fitter{state_size=state_shape, core=rnn, criterion=criterion, t0=
 local valid_state = torch.Tensor(batch_size, state_size):zero()
 
 local optimState = {
-    learningRate=1e-4
+    learningRate=opt.learningRate
 }
 
 if opt.gpu > 0 then

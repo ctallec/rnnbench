@@ -98,7 +98,7 @@ local function eval()
         for k=index, index + opt.t0 - 1 do
             local output, state = table.unpack(rnn:forward{valid_data[k], valid_state})
             loss = loss + criterion:forward(output, valid_data[k+1])
-            state:copy(valid_state)
+            valid_state:copy(state)
         end
         cumLoss = cumLoss + loss / opt.t0 / math.log(2)
     end

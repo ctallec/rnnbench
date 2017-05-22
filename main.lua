@@ -10,6 +10,7 @@ cmd:option('-t0', 100, 'sequence length')
 cmd:option('-learningRate', 1e-4, 'learning rate')
 cmd:option('-epochs', 20, 'number of epochs')
 cmd:option('-noclamp', false, 'clamping gradient')
+cmd:option('-ordered', false, 'no input shuffling')
 local opt = cmd:parse(arg)
 
 local data_dir = 'dataset/ptb'
@@ -81,7 +82,14 @@ local function train()
     end
 
     for i=1, 1000 do
-        index = torch.random(1, train_size - 100)
+        if opt.ordered then
+            index = index and (index + 99) % train_size + 1 or 1
+            if index + 100 > train_size then
+                index = 1
+            end
+        else
+            index = torch.random(1, train_size - 100)
+        end
         x = train_data[{{index, index + 99},{}}]
         y = train_data[{{index + 1, index + 100},{}}]
         local _, loss = optim.adam(feval, params, optimState)

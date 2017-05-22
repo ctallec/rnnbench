@@ -31,6 +31,11 @@ local batch_size = train_data:size(2)
 
 local rnncore = RNNCore{rnnType='lstm', hiddenSize=opt.hiddenSize, vocabSize=vocab_size}
 local rnn = rnncore:buildCore()
+
+if opt.gpu > 0 then
+    rnn = rnn:cuda()
+end
+
 local params, gradParams = rnn:getParameters()
 local criterion = nn.ClassNLLCriterion()
 
@@ -46,11 +51,11 @@ local optimState = {
 }
 
 if opt.gpu > 0 then
-    rnn = rnn:cuda()
     train_data = train_data:cuda()
     valid_data = valid_data:cuda()
     fitter = fitter:cuda()
     valid_state = valid_state:cuda()
+    criterion = criterion:cuda()
 end
 
 local function train()
